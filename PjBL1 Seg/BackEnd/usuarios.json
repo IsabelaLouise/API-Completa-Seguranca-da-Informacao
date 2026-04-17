@@ -1,0 +1,13 @@
+[ {
+  "id" : "a9c1db9b-c37d-4708-86f7-9c54c393c1d7",
+  "nome" : "Isabela Louise da Costa Silva",
+  "email" : "isabelalouise.cs@gmail.com",
+  "role" : "PACIENTE",
+  "senhaHash" : "$2a$12$wUepBjRqA.cHF0YJa/e4/O877QBsMkVlNvHRW2wnbAiMK9/Tf2Zdu"
+}, {
+  "id" : "8b54b3fb-09f7-40db-8326-e2cd7fa591de",
+  "nome" : "Isabela Louise da Costa Silva",
+  "email" : "isabelalouise@gmail.com",
+  "role" : "PACIENTE",
+  "senhaHash" : "$2a$12$1sbkV0.GHA7GJU29pnCg7.c69vyNbglB1nfKD6Sp4lwx2mM5L3sO6"
+} ]
