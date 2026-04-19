@@ -148,4 +148,45 @@ public class AuthHandler {
         exchange.getResponseBody().write(bytes);
         exchange.close();
     }
+
+    // Proteção de Rotas
+    public void handleProtected(HttpExchange exchange) throws IOException {
+
+        // Obtém o valor do header "Authorization" da requisição HTTP
+        String authHeader = exchange.getRequestHeaders().getFirst("Authorization");
+
+        // Verifica se o header existe e se está no formato esperado ("Bearer TOKEN")
+        // Caso contrário, retorna 401 (não autorizado)
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            exchange.sendResponseHeaders(401, -1);
+            return;
+        }
+
+        // Remove o prefixo "Bearer " para obter apenas o token JWT
+        String token = authHeader.substring(7);
+        
+        if (!jwtService.validateToken(token)) { // Verifica a assinatura com a chave secreta e se o token já não expirou
+            exchange.sendResponseHeaders(401, -1); // Retorna 401 caso seja inválido
+            return;
+        }
+
+        // Extrai o subject (email) armazenado no payload do token
+        String email = jwtService.extractEmail(token);
+
+        // Monta uma resposta simples em formato JSON
+        String response = "{\"message\":\"Acesso permitido para " + email + "\"}";
+        byte[] bytes = response.getBytes("UTF-8");
+
+        // Define o tipo de conteúdo da resposta como JSON
+        exchange.getResponseHeaders().add("Content-Type", "application/json");
+
+        // Envia status 200 (requisição bem-sucedida) com o tamanho do corpo
+        exchange.sendResponseHeaders(200, bytes.length);
+
+        // Escreve o conteúdo da resposta no corpo da requisição
+        exchange.getResponseBody().write(bytes);
+
+        // Encerra a conexão HTTP
+        exchange.close();
+    }
 }
