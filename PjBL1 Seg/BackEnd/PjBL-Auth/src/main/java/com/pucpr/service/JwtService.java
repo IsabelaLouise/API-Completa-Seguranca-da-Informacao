@@ -10,7 +10,7 @@ public class JwtService {
 
     // TODO: O ALUNO DEVE BUSCAR DE UMA VARIÁVEL DE AMBIENTE (System.getenv)
     // A chave deve ter pelo menos 256 bits (32 caracteres) para o algoritmo HS256.
-    private final String SECRET_KEY = System.getenv("JWT_SECRET");
+    private final String SECRET_KEY = System.getenv("JWT_SECRET"); /* pega variável do sistema, evita deixar chave no código */
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
@@ -27,12 +27,12 @@ public class JwtService {
         // Exemplo de implementação que eles podem seguir ou completar
         String secret = System.getenv("JWT_SECRET"); // Ensinar boas práticas!
         return Jwts.builder()
-                .subject(user.getEmail())
-                .claim("role", user.getRole())
+                .subject(user.getEmail()) // Identifica o usuário
+                .claim("role", user.getRole()) // Adiciona permissão
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 900000)) // 15 min
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
-                .compact();
+                .expiration(new Date(System.currentTimeMillis() + 900000)) // Expira em 15 min
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes())) // Assina com chave secreta
+                .compact(); // Gera string final do token
     }
 
     /**
@@ -43,7 +43,6 @@ public class JwtService {
      */
     public String extractEmail(String token) {
         return null;
-        //Seu código aqui
     }
 
     /**
