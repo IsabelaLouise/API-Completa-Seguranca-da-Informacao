@@ -3,49 +3,50 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <!-- Define a versão do modelo do Maven -->
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.pucpr</groupId>
-    <artifactId>PjBL-Auth</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.pucpr</groupId> <!-- Organização (tipo pacote base) -->
+    <artifactId>PjBL-Auth</artifactId> <!-- Nome do Projeto -->
+    <version>1.0-SNAPSHOT</version> <!-- Versão (SNAPSHOT = em desenvolvimento) -->
 
+    <!-- Define que o projeto usa Java 17 -->
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source> <!-- Source = versão do código -->
+        <maven.compiler.target>17</maven.compiler.target> <!-- Target = versão compatível de compliação -->
     </properties>
-    <dependencies>
 
+    <dependencies>
         <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
+            <artifactId>jjwt-api</artifactId> <!-- Interface -->
             <version>0.12.5</version>
         </dependency>
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
+            <artifactId>jjwt-impl</artifactId> <!-- Implementação real -->
             <version>0.12.5</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
+            <artifactId>jjwt-jackson</artifactId> <!-- integração com JSON -->
             <version>0.12.5</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <artifactId>jackson-databind</artifactId> <!-- Converte JSON em objetos Java, e vice-versa, usado no login -->
             <version>2.17.0</version>
         </dependency>
         <dependency>
             <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
+            <artifactId>jbcrypt</artifactId> <!-- Biblioteca de hash de senha -->
             <version>0.4</version>
         </dependency>
-
     </dependencies>
 
 </project>
