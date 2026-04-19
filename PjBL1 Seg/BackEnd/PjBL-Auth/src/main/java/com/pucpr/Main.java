@@ -27,7 +27,8 @@ public class Main {
 
         // Rotas
         server.createContext("/api/auth/register", authHandler::handleRegister);
-        server.createContext("/api/auth/login", authHandler::handleLogin);
+        server.createContext("/api/auth/login", authHandler::handleLogin); // Define endpoint
+        server.createContext("/api/protected", authHandler::handleProtected); // Cria rota protegida
 
         server.setExecutor(null); // cria um executor padrão
         System.out.println("Servidor iniciado na porta 8080...");
