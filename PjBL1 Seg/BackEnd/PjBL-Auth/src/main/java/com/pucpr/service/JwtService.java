@@ -12,7 +12,10 @@ public class JwtService {
     // A chave deve ter pelo menos 256 bits (32 caracteres) para o algoritmo HS256.
     private final String SECRET_KEY = System.getenv("JWT_SECRET"); /* pega variável do sistema, evita deixar chave no código */
 
-    private SecretKey getSigningKey() {
+    private SecretKey getSigningKey() { // Evita que a Secret_Key quebre
+        if (SECRET_KEY == null || SECRET_KEY.length() < 32) {
+            throw new RuntimeException("JWT_SECRET não definida ou muito curta");
+        }
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
@@ -42,7 +45,12 @@ public class JwtService {
      * 2. Retornar o Subject do Payload.
      */
     public String extractEmail(String token) {
-        return null;
+        return Jwts.parser()
+                .verifyWith(getSigningKey()) // Valida assinatura
+                .build()
+                .parseSignedClaims(token) //Lê o token
+                .getPayload()
+                .getSubject(); // Pega o email (subject)
     }
 
     /**
@@ -53,16 +61,18 @@ public class JwtService {
      * 3. Retornar true se o token for válido e false caso capture uma exceção.
      */
     public boolean validateToken(String token) {
-        // TODO: O ALUNO DEVE IMPLEMENTAR
+        // Verifica assinatura e qualquer erro retorna falso
         try {
-            // 1. Use o Jwts.parser() para descriptografar o token usando a mesma SECRET_KEY da geração.
-            // 2. A biblioteca JJWT joga uma exceção automaticamente se o token estiver expirado ou a assinatura for inválida.
-            // 3. Se o parse ocorrer sem erros, o token é íntegro. Retorne true.
+            Jwts.parser()
+                    .verifyWith(getSigningKey()) //  Verifica assinatura
+                    .build()
+                    .parseSignedClaims(token);
+
             return true;
         } catch (Exception e) {
-            // 4. Capture exceções específicas (ExpiredJwtException, SignatureException) e logue o erro para debug.
             return false;
         }
     }
 
 }
+
