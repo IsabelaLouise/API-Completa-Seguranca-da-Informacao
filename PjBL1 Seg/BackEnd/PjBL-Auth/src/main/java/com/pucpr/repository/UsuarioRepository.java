@@ -22,9 +22,9 @@ public class UsuarioRepository {
      * 4. Retornar um Optional.of(usuario) se encontrar, ou Optional.empty() se não existir.
      */
     public Optional<Usuario> findByEmail(String email) {
-        return findAll().stream()
+        return findAll().stream() /* Tranforma lista em fluxo */
                 .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .findFirst();
+                .findFirst(); /* Pega o primeiro resultado */
     }
 
     /**
@@ -37,11 +37,11 @@ public class UsuarioRepository {
      */
     public List<Usuario> findAll() {
         try {
-            File file = new File(FILE_PATH);
+            File file = new File(FILE_PATH); /* Representa o arquivo JSON */
             if (!file.exists()) {
                 return new ArrayList<>();
             }
-            return mapper.readValue(file, new TypeReference<List<Usuario>>() {});
+            return mapper.readValue(file, new TypeReference<List<Usuario>>() {}); /* Converte JSON em lista de usuários */
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -60,6 +60,7 @@ public class UsuarioRepository {
     public void save(Usuario usuario) throws IOException {
         List<Usuario> usuarios = findAll();
 
+        /* Verifica duplicação */
         boolean existe = usuarios.stream()
                 .anyMatch(u -> u.getEmail().equalsIgnoreCase(usuario.getEmail()));
 
@@ -70,6 +71,6 @@ public class UsuarioRepository {
         usuarios.add(usuario);
 
         mapper.writerWithDefaultPrettyPrinter()
-                .writeValue(new File(FILE_PATH), usuarios);
+                .writeValue(new File(FILE_PATH), usuarios); /* Salva no arquivo */
     }
 }
