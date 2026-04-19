@@ -17,9 +17,10 @@ public class Main {
         // Dica: Se o frontend estiver em outra porta, vocês precisarão adicionar
         // headers de "Access-Control-Allow-Origin" em todas as respostas.
 
+        // Cria servidor HTTP na porta 8080
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-        // Instanciar dependências manualmente (DI manual é ótimo para o aprendizado)
+        // Instanciar dependências manualmente (DI = Dependency Injection)
         UsuarioRepository repository = new UsuarioRepository();
         JwtService jwtService = new JwtService();
         AuthHandler authHandler = new AuthHandler(repository, jwtService);
